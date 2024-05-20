@@ -1,0 +1,38 @@
+[gd_scene load_steps=7 format=3 uid="uid://byenhsp0rqg8k"]
+
+[ext_resource type="PackedScene" uid="uid://blquf68j8xa5w" path="res://scenes/world/world.tscn" id="1_8mh3p"]
+[ext_resource type="Script" path="res://scenes/game.gd" id="1_wal4x"]
+[ext_resource type="PackedScene" uid="uid://bdimd318ylfw2" path="res://scenes/entities/tank/tank.tscn" id="2_g3yxs"]
+[ext_resource type="PackedScene" uid="uid://4rogrgt0yil3" path="res://scenes/ui/ui.tscn" id="4_w3jnk"]
+[ext_resource type="AudioStream" uid="uid://jt1uonaoisg" path="res://assets/audio/music/Rolemusic - The White Frame.mp3" id="5_n2l4n"]
+[ext_resource type="Script" path="res://scenes/camera.gd" id="6_66og5"]
+
+[node name="game" type="Node2D" node_paths=PackedStringArray("ui")]
+script = ExtResource("1_wal4x")
+TankScene = ExtResource("2_g3yxs")
+WorldScene = ExtResource("1_8mh3p")
+ui = NodePath("UI")
+
+[node name="UI" parent="." instance=ExtResource("4_w3jnk")]
+process_mode = 3
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+process_mode = 3
+stream = ExtResource("5_n2l4n")
+volume_db = -35.0
+autoplay = true
+bus = &"Music"
+
+[node name="Camera2D" type="Camera2D" parent="."]
+limit_left = 0
+limit_top = 0
+limit_right = 1936
+limit_bottom = 990
+editor_draw_limits = true
+script = ExtResource("6_66og5")
+SMOOTH_SPEED = 2.0
+
+[connection signal="menu_closed" from="UI" to="." method="_on_ui_menu_closed"]
+[connection signal="menu_opened" from="UI" to="." method="_on_ui_menu_opened"]
+[connection signal="quit_to_menu" from="UI" to="." method="_on_ui_quit_to_menu"]
+[connection signal="start_game" from="UI" to="." method="_on_ui_start_game"]

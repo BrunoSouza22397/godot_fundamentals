@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://ba1oac6waa1vc"]
+
+[ext_resource type="Script" path="res://scenes/entities/tank/weapon/bullet.gd" id="1_l3tgx"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rlypi"]
+size = Vector2(3, 3)
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_u58w8"]
+size = Vector2(3, 3)
+
+[node name="Bullet" type="Area2D"]
+collision_layer = 16
+collision_mask = 44
+script = ExtResource("1_l3tgx")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_rlypi")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("PlaceholderTexture2D_u58w8")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

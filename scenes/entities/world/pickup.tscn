@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://i7m4pwnncpnk"]
+
+[ext_resource type="Script" path="res://scenes/entities/world/pickup.gd" id="1_c6ye1"]
+[ext_resource type="Texture2D" uid="uid://32ppvmi7cvcs" path="res://assets/sprites/pickups.png" id="2_tgi7o"]
+[ext_resource type="AudioStream" uid="uid://bhemqqybydsq1" path="res://assets/audio/sfx/pickup.wav" id="3_qm7w2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1q42y"]
+size = Vector2(8, 8)
+
+[node name="Pickup" type="Area2D"]
+script = ExtResource("1_c6ye1")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_tgi7o")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_1q42y")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_qm7w2")
+bus = &"SFX"
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

@@ -1,0 +1,215 @@
+[gd_scene load_steps=13 format=3 uid="uid://4rogrgt0yil3"]
+
+[ext_resource type="Script" path="res://scenes/ui/ui.gd" id="1_jdxs3"]
+[ext_resource type="Texture2D" uid="uid://dnjq3tdmqb3pn" path="res://assets/sprites/ammo_ui_icon.png" id="2_djpgf"]
+[ext_resource type="PackedScene" uid="uid://ba6osmddq2evu" path="res://scenes/ui/menus/game_menu.tscn" id="3_3h7gc"]
+[ext_resource type="PackedScene" uid="uid://uiato652dfyg" path="res://scenes/ui/menus/main_menu.tscn" id="3_5eq3c"]
+[ext_resource type="Script" path="res://scenes/ui/cursor_manager.gd" id="3_o17l8"]
+[ext_resource type="Texture2D" uid="uid://brxvf2ftq2yn1" path="res://assets/sprites/cursor.png" id="4_q54dn"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_77sof"]
+atlas = ExtResource("2_djpgf")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hcun7"]
+atlas = ExtResource("2_djpgf")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="Animation" id="Animation_24ofr"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Control/Letterbox/TopRect:custom_minimum_size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Control/Letterbox/BottomRect:custom_minimum_size")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Control/Transition:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_tm3hp"]
+resource_name = "open_letterbox"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Control/Letterbox/TopRect:custom_minimum_size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(5, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 64)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Control/Letterbox/BottomRect:custom_minimum_size")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(5, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 64)]
+}
+
+[sub_resource type="Animation" id="Animation_0svyl"]
+resource_name = "screen_transition"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Control/Transition:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(2, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8lqf0"]
+_data = {
+"RESET": SubResource("Animation_24ofr"),
+"open_letterbox": SubResource("Animation_tm3hp"),
+"screen_transition": SubResource("Animation_0svyl")
+}
+
+[node name="UI" type="CanvasLayer"]
+script = ExtResource("1_jdxs3")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Score" type="Label" parent="Control/MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "0"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Control/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="ReloadProgress" type="TextureProgressBar" parent="Control/MarginContainer/VBoxContainer/HBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 1.0
+step = 0.1
+value = 1.0
+fill_mode = 3
+texture_under = SubResource("AtlasTexture_77sof")
+texture_progress = SubResource("AtlasTexture_hcun7")
+
+[node name="Menu" parent="Control" instance=ExtResource("3_3h7gc")]
+unique_name_in_owner = true
+layout_mode = 1
+
+[node name="Letterbox" type="Control" parent="Control"]
+process_mode = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="TopRect" type="ColorRect" parent="Control/Letterbox"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+color = Color(0, 0, 0, 1)
+
+[node name="BottomRect" type="ColorRect" parent="Control/Letterbox"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+color = Color(0, 0, 0, 1)
+
+[node name="MainMenu" parent="Control" instance=ExtResource("3_5eq3c")]
+unique_name_in_owner = true
+layout_mode = 1
+mouse_filter = 1
+
+[node name="Transition" type="ColorRect" parent="Control"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_8lqf0")
+}
+
+[node name="CursorManager" type="Node" parent="."]
+script = ExtResource("3_o17l8")
+base_window_size = Vector2(960, 544)
+cursor_texture = ExtResource("4_q54dn")
+
+[connection signal="main_menu" from="Control/Menu" to="." method="_on_menu_main_menu"]
+[connection signal="return_to_game" from="Control/Menu" to="." method="_on_menu_return_to_game"]
+[connection signal="start_game" from="Control/MainMenu" to="." method="_on_main_menu_start_game"]
